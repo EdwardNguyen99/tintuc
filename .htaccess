@@ -1,0 +1,40 @@
+RewriteEngine on
+RewriteRule ^songdep/$  index.php?p=cat&idLT=12  [L]
+RewriteRule ^bv/(.*)\.html$ index.php?p=detail&TieuDe_KhongDau=$1
+
+
+RewriteRule ^cat/(.*)/(.*)/$  index.php?p=cat&Ten_KhongDau=$1&pageNum=$2 [L]
+RewriteRule ^cat/(.*)/$  index.php?p=cat&Ten_KhongDau=$1&pageNum=1  [L]
+#[L] là end kết thuc luôn, sau khi da tim dc ket qua
+# tìm theo 2 diêu kien phải duoc dat truoc, 1 diều kiên
+
+RewriteRule ^search/(.*)/(.*)/$ index.php?p=search&tukhoa=$1&pageNum=$2 [L]
+RewriteRule ^search/(.*)/$  index.php?p=search&tukhoa=$1&pageNum=1  [L]
+
+DirectoryIndex index.php
+#khai bao trang mặt định, trang chu
+
+AddDefaultCharset UTF-8
+#khai bao theo ma UTF8
+
+
+Options -Indexes
+# giấu ko cho trang web đăng nhập vào folder, bắt buộc có
+RewriteRule ^lien-he/$  index.php?p=lienhe [L]
+Rewritebase /news/
+RewriteRule ^vi/$  index.php?lang=vi [L]
+RewriteRule ^en/$  index.php?lang=en [L]
+
+
+# cache images và flash 30 ngày
+<FilesMatch ".(flv|gif|jpg|jpeg|png|ico|swf)$">
+Header set Cache-Control "max-age=2592000"
+</FilesMatch>
+# cache text, css, và javascript, html files 1 tuần
+<FilesMatch ".(js|css|pdf|txt|htm|html)$">
+Header set Cache-Control "max-age=604800"
+</FilesMatch>
+# không cache scripts files
+<FilesMatch "\.(php)$">
+Header unset Cache-Control
+</FilesMatch>
